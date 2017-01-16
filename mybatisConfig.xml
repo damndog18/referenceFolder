@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+  
+  <!-- type 대신 alias 로 사용 할 수 있게 하는 설정. boardMapper.xml 에서 확인하자. -->
+  <typeAliases>
+  	<typeAlias type="com.jjojjo.mybatis.domain.BoardDTO" alias="BoardDTO"/>
+  	<typeAlias type="com.jjojjo.mybatis.domain.Member" alias="Member"/>
+  </typeAliases>
+  
+  <!-- 이게 디폴트 코드.
+  <environments default="development">
+    <environment id="development">
+      <transactionManager type="JDBC"/>
+      <dataSource type="POOLED">
+        <property name="driver" value="${driver}"/>
+        <property name="url" value="${url}"/>
+        <property name="username" value="${username}"/>
+        <property name="password" value="${password}"/>
+      </dataSource>
+    </environment>
+  </environments>
+  -->
+  
+  <environments default="development">
+    <environment id="development">
+      <transactionManager type="JDBC"/>
+      <dataSource type="POOLED">
+        <property name="driver" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/webproject"/>
+        <property name="username" value="kskim1"/>
+        <property name="password" value="1111"/>
+      </dataSource>
+    </environment>
+  </environments>
+  
+  <!-- 주의! 여기서의 경로는 . 이 아닌 / 다. -->
+  <mappers>
+    <mapper resource="com/jjojjo/mybatis/mybatis/boardMapper.xml"/>
+    <mapper resource="com/jjojjo/mybatis/mybatis/memberMapper.xml"/>
+  </mappers>
+  
+</configuration>
