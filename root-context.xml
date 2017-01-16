@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	
+	<!-- JNDI 방식의 DB 연결용 <bean> --> 
+	<bean id="dataSourceJNDI" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName">
+			<value>jdbc/TestDB</value>
+		</property>
+		<property name="resourceRef" value="true"></property>
+	</bean>
+	
+	<!-- c3p0 connection pool 
+	<bean id="dataSourceC3P0" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+		<property name="driverClass" value="com.mysql.jdbc.Driver"></property>
+		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/webproject"></property>
+		<property name="user" value="kskim1"></property>
+		<property name="password" value="1111"></property>
+	</bean>
+	-->
+	
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSourceJNDI"></property>
+	</bean>
+	
+	<!-- MemberDao 생성. jdbcTemplate 객체 주입. -->
+	<bean id="memberDao" class="com.jjojjo.mybatis.persistence.MemberDao">
+		<constructor-arg name="jdbcTemplate" ref="jdbcTemplate"></constructor-arg>
+	</bean>
+	
+	<!-- MemberRegisterService 생성. MemberDao 객체 주입. -->
+	<bean id="memberRegisterService" class="com.jjojjo.mybatis.service.MemberRegisterService">
+		<constructor-arg name="memberDao" ref="memberDao"></constructor-arg>
+	</bean>
+	
+	<!-- RegisterController 생성. MemberRegisterService 객체 주입. -->
+	
+</beans>
